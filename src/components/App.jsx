@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { useState } from 'react';
 import { Section } from './Section/Section';
 import { Statistics } from './Statistics/Statistics';
 import { Notification } from './Notification/Notification';
@@ -9,54 +9,52 @@ import {
   ButtonContainer,
 } from './FeedbackOptions/FeedbackOptions.styled';
 
-export class App extends Component {
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
+export const App = () => {
+  const [feedback, setFeedback] = useState({ good: 0, neutral: 0, bad: 0 });
+
+  const handleFeedback = type => {
+    setFeedback(prevState => ({
+      ...prevState,
+      [type]: prevState[type] + 1,
+    }));
   };
 
-  handleFeedback = type => {
-    this.setState(prevState => ({ [type]: prevState[type] + 1 }));
+  const countTotalFeedback = () => {
+    const { good, neutral, bad } = feedback;
+    return good + neutral + bad;
   };
 
-  countTotalFeedback = () => {
-    return this.state.good + this.state.neutral + this.state.bad;
+  const countPositiveFeedbackPercentage = () => {
+    const total = countTotalFeedback();
+    return total ? ((feedback.good / total) * 100).toFixed() : 0;
   };
 
-  countPositiveFeedbackPercentage = () => {
-    const total = this.countTotalFeedback();
-    return total ? ((this.state.good / total) * 100).toFixed() : 0;
-  };
-
-  render() {
-    return (
-      <Card>
-        <h1>Expresso</h1>
-        <Section title="Please leave your feedback">
-          <ButtonContainer>
-            <FeedbackOptions
-              options={Object.keys(this.state)}
-              onLeaveFeedback={this.handleFeedback}
-            />
-          </ButtonContainer>
-        </Section>
-        <Section title="Statistics">
-          {this.countTotalFeedback() === 0 ? (
-            <Notification message="There is no feedback yet" />
-          ) : (
-            <Statistics
-              good={this.state.good}
-              neutral={this.state.neutral}
-              bad={this.state.bad}
-              total={this.countTotalFeedback()}
-              positivePercentage={this.countPositiveFeedbackPercentage()}
-            />
-          )}
-        </Section>
-      </Card>
-    );
-  }
-}
+  return (
+    <Card>
+      <h1>Expresso</h1>
+      <Section title="Please leave your feedback">
+        <ButtonContainer>
+          <FeedbackOptions
+            options={Object.keys(feedback)}
+            onLeaveFeedback={handleFeedback}
+          />
+        </ButtonContainer>
+      </Section>
+      <Section title="Statistics">
+        {countTotalFeedback() === 0 ? (
+          <Notification message="There is no feedback yet" />
+        ) : (
+          <Statistics
+            good={feedback.good}
+            neutral={feedback.neutral}
+            bad={feedback.bad}
+            total={countTotalFeedback()}
+            positivePercentage={countPositiveFeedbackPercentage()}
+          />
+        )}
+      </Section>
+    </Card>
+  );
+};
 
 export default App;
