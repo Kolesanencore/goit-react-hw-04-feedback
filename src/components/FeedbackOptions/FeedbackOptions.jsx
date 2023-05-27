@@ -23,6 +23,7 @@ export const FeedbackOptions = ({ options, onLeaveFeedback }) => {
     <>
       {options.map(option => (
         <Button
+          style={{ gap: '10px' }}
           key={option}
           type="button"
           onClick={() => handleFeedback(option)}

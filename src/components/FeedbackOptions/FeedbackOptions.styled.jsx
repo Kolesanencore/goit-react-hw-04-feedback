@@ -7,13 +7,15 @@ export const Button = styled.button`
   font-size: 24px;
   border-radius: 4px;
   color: #ffffff;
-  font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: center;
   &:hover {
-    color: #442d2d;
-    background-color: #442d2d16;
+    box-shadow: 0 2px 8px rgba(255, 107, 1, 0),
+      inset 0 1px rgba(255, 255, 255, 0.3),
+      inset 0 10px rgba(255, 255, 255, 0.2),
+      inset 0 10px 20px rgba(255, 255, 255, 0.25),
+      inset 0 -15px 30px rgba(255, 107, 1, 0.3);
   }
 `;
 

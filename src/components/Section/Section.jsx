@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
+
 import { Title, TitleContainer } from './Section.styled';
+
 export const Section = ({ title, children }) => (
   <div>
     <TitleContainer>
