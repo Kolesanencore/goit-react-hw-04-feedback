@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
 
 import { Button } from './FeedbackOptions.styled';
 
@@ -12,13 +11,6 @@ const icons = {
 };
 
 export const FeedbackOptions = ({ options, onLeaveFeedback }) => {
-  const [selectedOption, setSelectedOption] = useState(null);
-
-  const handleFeedback = option => {
-    setSelectedOption(option);
-    onLeaveFeedback(option);
-  };
-
   return (
     <>
       {options.map(option => (
@@ -26,8 +18,7 @@ export const FeedbackOptions = ({ options, onLeaveFeedback }) => {
           style={{ gap: '10px' }}
           key={option}
           type="button"
-          onClick={() => handleFeedback(option)}
-          selected={selectedOption === option}
+          onClick={() => onLeaveFeedback(option)}
         >
           {option.charAt(0).toUpperCase() + option.slice(1)}
           {icons[option]}
